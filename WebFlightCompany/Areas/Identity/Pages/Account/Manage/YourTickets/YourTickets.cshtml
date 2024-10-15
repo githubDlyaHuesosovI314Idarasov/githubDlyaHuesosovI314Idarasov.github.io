@@ -1,0 +1,51 @@
+﻿@page
+@model YourTicketsModel
+
+<p>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Ticket[0].Passenger)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ticket[0].From)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ticket[0].To)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ticket[0].TimeFrom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ticket[0].TimeTo)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Ticket) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Passenger.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.From)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.To)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TimeFrom)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TimeTo)
+            </td>
+            <td>
+                <a asp-page="./Details" asp-route-id="@item.Id">Details</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
