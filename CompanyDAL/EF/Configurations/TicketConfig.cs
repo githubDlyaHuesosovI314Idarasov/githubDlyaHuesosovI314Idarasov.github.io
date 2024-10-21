@@ -17,9 +17,14 @@ namespace CompanyDAL.EF.Configurations
 
             TimeOnly from = new TimeOnly(20,30);
             TimeOnly to = new TimeOnly(8,30);
+            DateTime dateTime = new DateTime(dateFrom, from, DateTimeKind.Utc);
+            DateOnly dateFrom = new DateOnly(420, 4, 20);
+            DateOnly dateto = new DateOnly(2001, 9, 11);
+
             builder.HasData(
-                new Ticket { Id = 1, From = "DonbASS", To = "Warsaw", TimeFrom = from, TimeTo = to, PassengerId = 1, UserId = ""}
+                new Ticket { Id = 1, CountryFrom = "Ukraine", CountryTo = "Poland", CityFrom = "DonbASS", CityTo = "Warsaw", TimeFrom = from, TimeTo = to, PassengerId = 1, UserId = "", DateFrom = dateFrom, DateTo = dateto }
                 );
+
         }
     }
 }

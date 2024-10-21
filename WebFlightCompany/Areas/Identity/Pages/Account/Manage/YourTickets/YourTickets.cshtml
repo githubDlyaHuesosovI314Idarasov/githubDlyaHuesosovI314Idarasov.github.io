@@ -10,10 +10,16 @@
                 @Html.DisplayNameFor(model => model.Ticket[0].Passenger)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Ticket[0].From)
+                @Html.DisplayNameFor(model => model.Ticket[0].CountryFrom)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Ticket[0].To)
+                @Html.DisplayNameFor(model => model.Ticket[0].CountryTo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ticket[0].CityFrom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ticket[0].CityTo)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Ticket[0].TimeFrom)
@@ -31,10 +37,16 @@
                 @Html.DisplayFor(modelItem => item.Passenger.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.From)
+                @Html.DisplayFor(modelItem => item.CountryFrom)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.To)
+                @Html.DisplayFor(modelItem => item.CountryTo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CityFrom)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CityTo)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.TimeFrom)

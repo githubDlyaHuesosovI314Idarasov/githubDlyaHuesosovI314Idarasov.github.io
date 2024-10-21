@@ -23,17 +23,29 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.MaxPassengerCount)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.From)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CountryFrom)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.From)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CountryFrom)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CountryTo)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CountryTo)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.To)
+            @Html.DisplayNameFor(model => model.CityFrom)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.To)
+            @Html.DisplayFor(model => model.CityFrom)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CityTo)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CityTo)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.TimeFrom)
@@ -47,16 +59,7 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.TimeTo)
         </dd>
-        @{/*
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Time)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Time)
-        </dd>
-        */
-        
-        }
+
     </dl>
     
     <form asp-action="Delete">

@@ -33,7 +33,7 @@
 </table>
 
 <h1>Index</h1>
-<table class="table">
+<table class="table-responsive-lg">
     <thead>
         <tr>
             <th>
@@ -43,10 +43,16 @@
                 @Html.DisplayNameFor(model => model.MaxPassengerCount)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.From)
+                @Html.DisplayNameFor(model => model.CountryFrom)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.To)
+                @Html.DisplayNameFor(model => model.CountryTo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CityFrom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CityTo)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.TimeFrom)
@@ -54,12 +60,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.TimeTo)
             </th>
-            @{/*
-            <th>
-                @Html.DisplayNameFor(model => model.Time)
-            </th>
-            */
-            }
+
             <th></th>
         </tr>
     </thead>
@@ -73,10 +74,16 @@
                 @Html.DisplayFor(modelItem => item.MaxPassengerCount)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.From)
+                @Html.DisplayFor(modelItem => item.CountryFrom)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.To)
+                @Html.DisplayFor(modelItem => item.CountryTo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CityFrom)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CityTo)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.TimeFrom)

@@ -4,6 +4,7 @@ using CompanyDAL.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CompanyDAL.Migrations
 {
     [DbContext(typeof(FlightCompanyDbContext))]
-    partial class FlightCompanyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241020132221_RemodelTicket")]
+    partial class RemodelTicket
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -356,12 +359,6 @@ namespace CompanyDAL.Migrations
                     b.Property<string>("CountryTo")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateOnly>("DateFrom")
-                        .HasColumnType("date");
-
-                    b.Property<DateOnly>("DateTo")
-                        .HasColumnType("date");
-
                     b.Property<int>("MaxPassengerCount")
                         .HasColumnType("int");
 
@@ -387,8 +384,6 @@ namespace CompanyDAL.Migrations
                             CityTo = "Warsaw",
                             CountryFrom = "Ukraine",
                             CountryTo = "Warsaw",
-                            DateFrom = new DateOnly(420, 4, 20),
-                            DateTo = new DateOnly(2001, 9, 11),
                             MaxPassengerCount = 911,
                             Model = "Boeing 767",
                             TimeFrom = new TimeOnly(20, 30, 0),
@@ -415,12 +410,6 @@ namespace CompanyDAL.Migrations
 
                     b.Property<string>("CountryTo")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateOnly>("DateFrom")
-                        .HasColumnType("date");
-
-                    b.Property<DateOnly>("DateTo")
-                        .HasColumnType("date");
 
                     b.Property<bool>("IsExpired")
                         .HasColumnType("bit");
@@ -452,8 +441,6 @@ namespace CompanyDAL.Migrations
                             CityTo = "Warsaw",
                             CountryFrom = "Ukraine",
                             CountryTo = "Poland",
-                            DateFrom = new DateOnly(420, 4, 20),
-                            DateTo = new DateOnly(2001, 9, 11),
                             IsExpired = false,
                             PassengerId = 1,
                             TimeFrom = new TimeOnly(20, 30, 0),
