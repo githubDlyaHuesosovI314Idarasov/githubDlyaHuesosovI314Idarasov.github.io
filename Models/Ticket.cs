@@ -12,14 +12,14 @@ namespace Models
     public sealed class Ticket : Destination
     {
         private Int32 _passengerId;
-        private String _userId;
-        private Boolean _isExpired;
+        private String? _userId;
+        private Boolean _isExpired = false;
 
         private Passenger _passenger = null!;
 
 
         public Int32 PassengerId { get { return _passengerId; } set { _passengerId = value; } }
-        public String UserId { get { return _userId; } set { _userId = value; } }
+        public String? UserId { get { return _userId; } set { _userId = value; } }
         public Boolean IsExpired { get { return _isExpired; } set { _isExpired = value; } }
 
         [ValidateNever]

@@ -1,27 +1,40 @@
-﻿@using Models
-@model IEnumerable<Models.Ticket>
+﻿@model IEnumerable<Models.Ticket>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Search";
 }
-<h3>Search by Passenger</h3>
-<table class="table">
-    <tr>
-        <th>
-            <a asp-action="Create">Create New</a>
-        </th>
-    
-    @foreach(Passenger item in ViewBag.Passengers)
-    {
-      <th>
-         <a asp-action="Index" asp-route-id="@item.Id">@item.Name</a>
-      </th>
-    }
-    </tr>
-</table>
 
-<h1>Ticket List</h1>
-<table class="table">
+<div class="container-lg">
+    <table class="table">
+        <thead>
+            <tr>
+                <h1 class="align-content-lg-start">Search Tickets by CityFrom and CityTo</h1>
+            </tr>
+        </thead>
+        <tbody class="align-content-lg-around">
+            <tr>
+                <form asp-area="Admin" asp-controller="Ticket" asp-action="Search" method="get">
+                    <th>
+                        <select class="form-control" name="cityFrom" asp-items="ViewBag.CityFrom">
+                           <option value="">Select CityFrom</option>
+                        </select>
+                    </th> 
+                    <th>
+                        <select class="form-control" name="cityTo" asp-items="ViewBag.CityTo">
+                            <option value="">Select CityTo</option>
+                        </select>
+                    </th>
+                    <th>
+                        <button type="submit" class="btn align-content-md-end btn-primary">Search</button>
+                    </th>
+                </form>
+            </tr>
+        </tbody>
+
+
+    </table>
+</div>
+<table class="table lg">
     <thead>
         <tr>
             <th>
@@ -45,7 +58,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.DateTimeTo)
             </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -74,8 +86,12 @@
             </td>
 
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <form asp-action="BuyTicket" asp-route-id="@item.Id" method="post">
+                    @{ 
+                        // <a asp-action="BuyTicket" asp-route-id="@item.Id">Buy</a>
+                    }
+                    <button type="submit" class="btn btn-primary">Buy</button>
+                </form>
             </td>
         </tr>
 }

@@ -22,10 +22,10 @@
                 @Html.DisplayNameFor(model => model.Ticket[0].CityTo)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Ticket[0].TimeFrom)
+                @Html.DisplayNameFor(model => model.Ticket[0].DateTimeFrom)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Ticket[0].TimeTo)
+                @Html.DisplayNameFor(model => model.Ticket[0].DateTimeTo)
             </th>
             <th></th>
         </tr>
@@ -49,10 +49,10 @@
                 @Html.DisplayFor(modelItem => item.CityTo)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.TimeFrom)
+                @Html.DisplayFor(modelItem => item.DateTimeFrom)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.TimeTo)
+                @Html.DisplayFor(modelItem => item.DateTimeTo)
             </td>
             <td>
                 <a asp-page="./Details" asp-route-id="@item.Id">Details</a>

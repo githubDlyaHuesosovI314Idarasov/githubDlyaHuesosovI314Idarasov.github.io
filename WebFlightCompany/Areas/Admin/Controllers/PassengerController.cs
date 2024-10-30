@@ -41,16 +41,16 @@ namespace WebFlightCompany.Areas.Admin.Controllers
             if (id == 0)
             {
                 ticketOptions.OrderBy = p => p.Id;
-                ticketOptions.ThenOrderBy = p => p.TimeFrom;
+                ticketOptions.ThenOrderBy = p => p.DateTimeFrom;
                 planeOptions.OrderBy = p => p.Id;
-                planeOptions.ThenOrderBy = p => p.TimeFrom;
+                planeOptions.ThenOrderBy = p => p.DateTimeFrom;
             }
             else
             {
                 ticketOptions.Where = p => p.Id == id;
-                ticketOptions.OrderBy = p => p.TimeFrom;
+                ticketOptions.OrderBy = p => p.DateTimeFrom;
                 planeOptions.Where = p => p.Id == id;
-                planeOptions.OrderBy = p => p.TimeFrom;
+                planeOptions.OrderBy = p => p.DateTimeFrom;
             }
 
             IEnumerable<Ticket> ticketList = _ticketRepo.List(ticketOptions);

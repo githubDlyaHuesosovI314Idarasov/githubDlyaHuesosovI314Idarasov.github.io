@@ -17,15 +17,12 @@ namespace CompanyDAL.EF.Configurations
             builder.HasMany(p => p.Employees).WithOne(p => p.Plane).HasForeignKey(p => p.PlaneId);
 
 
-            TimeOnly from = new TimeOnly(20, 30);
-            TimeOnly to = new TimeOnly(8, 30);
 
-            DateOnly dateFrom = new DateOnly(420, 4, 20);
-            DateOnly dateto = new DateOnly(2001, 9, 11);
+            DateTime dateTimeFrom = new DateTime(420, 4, 20, 13, 0, 0);
+            DateTime dateTimeTo = new DateTime(2001, 9, 11, 23, 59, 59);
 
             builder.HasData(
-
-                new Plane { Id = 1, CountryFrom = "Ukraine", CountryTo = "Warsaw", CityFrom = "DonbASS", CityTo = "Warsaw", MaxPassengerCount = 911, Model = "Boeing 767", TimeFrom = from, TimeTo = to, DateFrom = dateFrom, DateTo = dateto }
+                new Plane { Id = 1, CountryFrom = "Ukraine", CountryTo = "Warsaw", CityFrom = "DonbASS", CityTo = "Warsaw", MaxPassengerCount = 911, Model = "Boeing 767", DateTimeFrom = dateTimeFrom, DateTimeTo = dateTimeTo }
                 );
         }
     }

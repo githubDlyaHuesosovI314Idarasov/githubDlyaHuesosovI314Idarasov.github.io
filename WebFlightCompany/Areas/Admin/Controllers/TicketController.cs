@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Models;
+using NuGet.Protocol;
 using System.Security.Claims;
 
 namespace WebFlightCompany.Areas.Admin.Controllers
@@ -33,7 +34,7 @@ namespace WebFlightCompany.Areas.Admin.Controllers
                 Includes = "Plane, Tickets"
             };
 
-            if(id == 0)
+            if (id == 0)
             {
                 passengerOptions.OrderBy = p => p.Id;
                 passengerOptions.ThenOrderBy = p => p.Name;
@@ -96,7 +97,7 @@ namespace WebFlightCompany.Areas.Admin.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
-           
+
             return View(ticket);
 
         }
@@ -125,49 +126,69 @@ namespace WebFlightCompany.Areas.Admin.Controllers
 
             return View(ticket);
         }
-/*
-        [HttpGet]
-        public ActionResult List()
-        {
-            return View();
-        }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-*/
+
         public ActionResult List(Int32 id)
         {
+
             QueryOptions<Ticket> ticketOptions = new QueryOptions<Ticket>
             {
                 OrderBy = p => p.Id,
                 Where = p => p.IsExpired == false && String.IsNullOrEmpty(p.UserId)
-                
-            };
-            QueryOptions<Passenger> passengerOptions = new QueryOptions<Passenger>
-            {
-                Includes = "Plane, Tickets"
+
             };
 
-            if (id == 0)
-            {
-                passengerOptions.OrderBy = p => p.Id;
-                passengerOptions.ThenOrderBy = p => p.Name;
-            }
-            else
-            {
-                passengerOptions.Where = p => p.Id == id;
-                passengerOptions.OrderBy = p => p.Name;
-            }
 
             IEnumerable<Ticket> ticketList = _ticketRepo.List(ticketOptions);
-            IEnumerable<Passenger> passengerList = _passengerRepo.List(passengerOptions);
+            IEnumerable<Passenger> passengerList = _passengerRepo.List(new QueryOptions<Passenger>());
 
-            ViewBag.Id = id;
+
             ViewBag.Passengers = passengerList;
+            LoadSearchMembers();
 
 
             return View(ticketList);
 
+        }
+        [HttpGet]
+        public ActionResult Search(String? cityFrom, String? cityTo)
+        {
+            LoadSearchMembers();
+
+            QueryOptions<Ticket> queryOptions = new QueryOptions<Ticket>()
+            {
+                Where = p => p.IsExpired == false && String.IsNullOrEmpty(p.UserId)
+            };
+            IEnumerable<Ticket> tickets = _ticketRepo.List(queryOptions);
+
+            if (!String.IsNullOrEmpty(cityFrom) && !String.IsNullOrEmpty(cityTo))
+            {
+                queryOptions = new QueryOptions<Ticket>()
+                {
+                    Where = p => p.CityFrom == cityFrom && p.CityTo == cityTo && p.IsExpired == false && String.IsNullOrEmpty(p.UserId)
+                };
+                tickets = _ticketRepo.List(queryOptions);
+                
+            }
+            else if (!String.IsNullOrEmpty(cityFrom))
+            {
+                queryOptions = new QueryOptions<Ticket>()
+                {
+                    Where = p => p.CityFrom == cityFrom && p.IsExpired == false && String.IsNullOrEmpty(p.UserId)
+                };
+                tickets = _ticketRepo.List(queryOptions);
+            }
+            else if (!String.IsNullOrEmpty(cityTo))
+            {
+                queryOptions = new QueryOptions<Ticket>()
+                {
+                    Where = p => p.CityTo == cityTo && p.IsExpired == false && String.IsNullOrEmpty(p.UserId)
+                };
+                tickets = _ticketRepo.List(queryOptions);
+            }
+
+
+            return View(tickets);
         }
 
         public void BuyTicket(Int32 id)
@@ -185,7 +206,6 @@ namespace WebFlightCompany.Areas.Admin.Controllers
 
         }
 
-
         private Ticket GetTicket(Int32 id)
         {
             QueryOptions<Ticket> queryOptions = new QueryOptions<Ticket>()
@@ -199,12 +219,28 @@ namespace WebFlightCompany.Areas.Admin.Controllers
 
         private void LoadTickets() {
 
-            IEnumerable<Ticket> tickets = _ticketRepo.List(new QueryOptions<Ticket>
-            {
-                OrderBy = p => p.Id,
-                
-            });
+            IEnumerable<Ticket> tickets = _ticketRepo.List(new QueryOptions<Ticket>());
             ViewBag.Tickets = tickets;
+        }
+
+        private void LoadSearchMembers()
+        {
+            IEnumerable<String?> cityFrom = _ticketRepo.List(new QueryOptions<Ticket>(){
+
+                Where = p => p.IsExpired == false && String.IsNullOrEmpty(p.UserId)
+            }).Select(p => p.CityFrom).Distinct().ToList();
+
+            IEnumerable<String?> cityTo = _ticketRepo.List(new QueryOptions<Ticket>()
+            {
+                Where = p => p.IsExpired == false && String.IsNullOrEmpty(p.UserId)
+            }).Select(p => p.CityTo).Distinct().ToList();
+
+
+            ViewBag.CityFrom = new SelectList(cityFrom);
+            ViewBag.CityTo = new SelectList(cityTo);
+
+
+            ViewBag.Passengers = _passengerRepo.List(new QueryOptions<Passenger>());
         }
 
         private void LoadViewBag()

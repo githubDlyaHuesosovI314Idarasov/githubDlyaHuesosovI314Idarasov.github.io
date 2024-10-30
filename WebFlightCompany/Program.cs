@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileSystemGlobbing.Internal.Patterns;
 using WebFlightCompany.Areas.Identity.Pages.Account.Manage;
+using WebFlightCompany.Infrastracture.HostedServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +19,7 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.R
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<FlightCompanyDbContext>();
 
+builder.Services.AddHostedService<TicketExpirationHostedService>();
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();

@@ -36,20 +36,25 @@
             @Html.DisplayFor(model => model.Ticket.CityTo)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Ticket.TimeFrom)
+            @Html.DisplayNameFor(model => model.Ticket.DateTimeFrom)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Ticket.TimeFrom)
+            @Html.DisplayFor(model => model.Ticket.DateTimeFrom)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Ticket.TimeTo)
+            @Html.DisplayNameFor(model => model.Ticket.DateTimeTo)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Ticket.TimeTo)
+            @Html.DisplayFor(model => model.Ticket.DateTimeTo)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Ticket.IsExpired)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Ticket.IsExpired)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-page="./Edit" asp-route-id="@Model.Ticket.Id">Edit</a> |
-    <a asp-page="./Index">Back to List</a>
+    <a asp-page="./YourTickets">Back to List</a>
 </div>

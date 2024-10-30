@@ -15,14 +15,12 @@ namespace CompanyDAL.EF.Configurations
         {
             builder.HasOne(p => p.Passenger).WithMany(p => p.Tickets).OnDelete(DeleteBehavior.ClientSetNull);
 
-            TimeOnly from = new TimeOnly(20,30);
-            TimeOnly to = new TimeOnly(8,30);
-            DateTime dateTime = new DateTime(dateFrom, from, DateTimeKind.Utc);
-            DateOnly dateFrom = new DateOnly(420, 4, 20);
-            DateOnly dateto = new DateOnly(2001, 9, 11);
+
+            DateTime dateTimeFrom = new DateTime(420, 4, 20, 13, 0, 0);
+            DateTime dateTimeTo = new DateTime(2001, 9, 11, 23, 59, 59);
 
             builder.HasData(
-                new Ticket { Id = 1, CountryFrom = "Ukraine", CountryTo = "Poland", CityFrom = "DonbASS", CityTo = "Warsaw", TimeFrom = from, TimeTo = to, PassengerId = 1, UserId = "", DateFrom = dateFrom, DateTo = dateto }
+                new Ticket { Id = 1, CountryFrom = "Ukraine", CountryTo = "Poland", CityFrom = "DonbASS", CityTo = "Warsaw", PassengerId = 1, UserId = "", DateTimeFrom = dateTimeFrom, DateTimeTo = dateTimeTo }
                 );
 
         }
