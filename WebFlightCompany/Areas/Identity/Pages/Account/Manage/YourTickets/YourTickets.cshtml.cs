@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using CompanyDAL.EF;
@@ -13,9 +9,9 @@ namespace WebFlightCompany.Areas.Identity.Pages.Account.Manage.YourTickets
 {
     public class YourTicketsModel : PageModel
     {
-        private readonly CompanyDAL.EF.FlightCompanyDbContext _context;
+        private readonly FlightCompanyDbContext _context;
 
-        public YourTicketsModel(CompanyDAL.EF.FlightCompanyDbContext context)
+        public YourTicketsModel(FlightCompanyDbContext context)
         {
             _context = context;
         }

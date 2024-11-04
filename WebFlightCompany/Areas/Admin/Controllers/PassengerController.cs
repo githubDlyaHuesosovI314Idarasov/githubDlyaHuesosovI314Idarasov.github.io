@@ -2,6 +2,7 @@
 using CompanyDAL.Repos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Models;
 using System.Security.Cryptography.Xml;
@@ -63,6 +64,34 @@ namespace WebFlightCompany.Areas.Admin.Controllers
 
             return View(passengerList);
         }
+
+
+        public ActionResult Search(String name, String secondName)
+        {
+            LoadSearchMembers();
+
+            QueryOptions<Passenger> queryOptions = new QueryOptions<Passenger>();
+
+            IEnumerable<Passenger> passengers = _passengerRepo.List(queryOptions);
+
+            if (!String.IsNullOrEmpty(name) && !String.IsNullOrEmpty(secondName))
+            {
+                passengers = passengers.Where(p => p.Name == name && p.SecondName == secondName);
+            }
+            else if (!String.IsNullOrEmpty(name) && String.IsNullOrEmpty(secondName))
+            {
+                passengers = passengers.Where(p => p.Name == name);
+            }
+            else if (!String.IsNullOrEmpty(secondName) && String.IsNullOrEmpty(name))
+            {
+                passengers = passengers.Where(p => p.SecondName == secondName);
+            }
+
+
+            return View(passengers);
+        }
+
+
 
         [HttpGet]
         public IActionResult Create()
@@ -142,6 +171,17 @@ namespace WebFlightCompany.Areas.Admin.Controllers
             return _passengerRepo.Get(queryOptions) ?? new Passenger();
         }
 
+        private void LoadSearchMembers()
+        {
+            LoadViewBag();
+            QueryOptions<Passenger> queryOptions = new QueryOptions<Passenger>();
+
+            IEnumerable<String> names = _passengerRepo.List(queryOptions).Select(p => p.Name).Distinct();
+            IEnumerable<String> secondNames = _passengerRepo.List(queryOptions).Select(p => p.SecondName).Distinct();
+
+            ViewBag.Names = new SelectList(names);
+            ViewBag.SecondNames = new SelectList(secondNames);
+        }
 
         private void LoadViewBag()
         {

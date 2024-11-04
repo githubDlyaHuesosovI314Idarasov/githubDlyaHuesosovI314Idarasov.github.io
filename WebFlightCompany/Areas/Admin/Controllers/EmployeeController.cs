@@ -2,6 +2,7 @@
 using CompanyDAL.Repos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Models;
 
@@ -21,7 +22,7 @@ namespace WebFlightCompany.Areas.Admin.Controllers
 
         public IActionResult Index(Int32 id)
         {
-            QueryOptions<Employee> ticketOptions = new QueryOptions<Employee>
+            QueryOptions<Employee> employeeOptions = new QueryOptions<Employee>
             {
                 OrderBy = p => p.Id
             };
@@ -42,7 +43,7 @@ namespace WebFlightCompany.Areas.Admin.Controllers
                 planeOptions.OrderBy = p => p.Model;
             }
 
-            IEnumerable<Employee> employeeList = _employeeRepo.List(ticketOptions);
+            IEnumerable<Employee> employeeList = _employeeRepo.List(employeeOptions);
             IEnumerable<Plane> planeList = _planeRepo.List(planeOptions);
 
             ViewBag.Id = id;
@@ -50,6 +51,39 @@ namespace WebFlightCompany.Areas.Admin.Controllers
 
 
             return View(employeeList);
+        }
+
+        [HttpGet]
+        public ActionResult Search(String name, String secondName, String position)
+        {
+            LoadSearchMembers();
+
+            QueryOptions<Employee> queryOptions = new QueryOptions<Employee>();
+            
+            IEnumerable<Employee> employees = _employeeRepo.List(queryOptions);
+
+            if(!String.IsNullOrEmpty(name) && !String.IsNullOrEmpty(secondName) && !String.IsNullOrEmpty(position))
+            {
+                queryOptions = new QueryOptions<Employee>()
+                {
+                    Where = p => p.Name == name && p.Name == secondName && p.Name == position
+                };
+                employees = _employeeRepo.List(queryOptions);
+            }
+            else if (!String.IsNullOrEmpty(name) && String.IsNullOrEmpty(secondName) && String.IsNullOrEmpty(position))
+            {
+                employees = employees.Where(p => p.Name == name);
+            }
+            else if (!String.IsNullOrEmpty(secondName) && String.IsNullOrEmpty(name) && String.IsNullOrEmpty(position))
+            {
+                employees = employees.Where(p => p.SecondName == secondName);
+            }
+            else if (!String.IsNullOrEmpty(position) && String.IsNullOrEmpty(name) && String.IsNullOrEmpty(secondName))
+            {
+                employees = employees.Where(p => p.Position == position);
+            }
+
+            return View("Index", employees);  
         }
 
 
@@ -127,6 +161,24 @@ namespace WebFlightCompany.Areas.Admin.Controllers
             };
 
             return _employeeRepo.Get(queryOptions) ?? new Employee();
+        }
+
+        private void LoadSearchMembers()
+        {
+            QueryOptions<Plane> planeOptions = new QueryOptions<Plane>();
+            QueryOptions<Employee> employeeOptions = new QueryOptions<Employee>();
+
+
+            ViewBag.Planes = _planeRepo.List(planeOptions);
+
+            IEnumerable<String> names = _employeeRepo.List(employeeOptions).Select(p => p.Name).Distinct().ToList();
+            IEnumerable<String> secondNames = _employeeRepo.List(employeeOptions).Select(p => p.SecondName).Distinct().ToList();
+            IEnumerable<String> positions = _employeeRepo.List(employeeOptions).Select(p => p.Position).Distinct().ToList();
+            ViewBag.Names = new SelectList(names);
+            ViewBag.SecondNames = new SelectList(secondNames);
+            ViewBag.Positions = new SelectList(positions);
+            
+
         }
 
 

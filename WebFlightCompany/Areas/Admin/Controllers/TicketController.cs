@@ -150,7 +150,32 @@ namespace WebFlightCompany.Areas.Admin.Controllers
             return View(ticketList);
 
         }
-        [HttpGet]
+
+        public ActionResult List(String? cityFrom, String? cityTo)
+        {
+            LoadSearchMembers();
+
+            QueryOptions<Ticket> queryOptions = new QueryOptions<Ticket>();
+
+            IEnumerable<Ticket> tickets = _ticketRepo.List(queryOptions);
+
+            if (!String.IsNullOrEmpty(cityFrom) && !String.IsNullOrEmpty(cityTo))
+            {
+                tickets = tickets.Where(p => p.CityFrom == cityFrom && p.CityTo == cityTo);
+            }
+            else if (!String.IsNullOrEmpty(cityFrom) && String.IsNullOrEmpty(cityTo))
+            {
+                tickets = tickets.Where(p => p.CityFrom == cityFrom);
+            }
+            else if (!String.IsNullOrEmpty(cityTo) && String.IsNullOrEmpty(cityFrom))
+            {
+                tickets = tickets.Where(p => p.CityTo == cityTo);
+            }
+
+
+            return View(tickets);
+        }
+
         public ActionResult Search(String? cityFrom, String? cityTo)
         {
             LoadSearchMembers();
@@ -163,28 +188,15 @@ namespace WebFlightCompany.Areas.Admin.Controllers
 
             if (!String.IsNullOrEmpty(cityFrom) && !String.IsNullOrEmpty(cityTo))
             {
-                queryOptions = new QueryOptions<Ticket>()
-                {
-                    Where = p => p.CityFrom == cityFrom && p.CityTo == cityTo && p.IsExpired == false && String.IsNullOrEmpty(p.UserId)
-                };
-                tickets = _ticketRepo.List(queryOptions);
-                
+                tickets = tickets.Where(p => p.CityFrom == cityFrom && p.CityTo == cityTo);
             }
             else if (!String.IsNullOrEmpty(cityFrom))
             {
-                queryOptions = new QueryOptions<Ticket>()
-                {
-                    Where = p => p.CityFrom == cityFrom && p.IsExpired == false && String.IsNullOrEmpty(p.UserId)
-                };
-                tickets = _ticketRepo.List(queryOptions);
+                tickets = tickets.Where(p => p.CityFrom == cityFrom);
             }
             else if (!String.IsNullOrEmpty(cityTo))
             {
-                queryOptions = new QueryOptions<Ticket>()
-                {
-                    Where = p => p.CityTo == cityTo && p.IsExpired == false && String.IsNullOrEmpty(p.UserId)
-                };
-                tickets = _ticketRepo.List(queryOptions);
+                tickets = tickets.Where(p => p.CityTo == cityTo);
             }
 
 

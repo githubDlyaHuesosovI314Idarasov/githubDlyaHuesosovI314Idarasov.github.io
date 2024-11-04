@@ -1,0 +1,96 @@
+﻿@using Models
+@model IEnumerable<Models.Passenger>
+
+@{
+    ViewData["Title"] = "Search";
+}
+
+<div class="container-lg">
+    <table class="table">
+        <thead>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Second Name</th>
+            </tr>
+        </thead>
+        <tbody class="align-content-lg-around">
+            <tr>
+                <form asp-area="Admin" asp-controller="Passenger" asp-action="Search" method="get">
+                @Html.AntiForgeryToken()
+                <th>
+                    <select class="form-control" name="name" asp-items="ViewBag.Names">
+                        <option value="">Select Name</option>
+                    </select>
+                </th>
+                <th>
+                    <select class="form-control" name="secondName" asp-items="ViewBag.SecondNames">
+                        <option value="">Select Second Name</option>
+                    </select>
+                </th>
+                <th>
+                    <button type="submit" class="btn align-content-md-end btn-primary">Search</button>
+                </th>
+                </form>
+            </tr>
+        </tbody>
+
+
+    </table>
+</div>
+
+<h1>Index</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Plane).FirstOrDefault();
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SecondName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Age)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Sex)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @if (item.Plane != null)
+                {
+                    @Html.DisplayFor(modelItem => item.Plane.Model)
+                }
+                else
+                {
+                    <span>No plane assigned</span>
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SecondName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Age)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sex)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

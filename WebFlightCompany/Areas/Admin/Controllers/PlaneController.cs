@@ -67,6 +67,36 @@ namespace WebFlightCompany.Areas.Admin.Controllers
             return View(planetList);
         }
 
+        [HttpGet]
+        public ActionResult Search(String model, String? cityFrom, String? cityTo)
+        {
+            LoadSearchMembers();
+
+            QueryOptions<Plane> queryOptions = new QueryOptions<Plane>();
+
+            IEnumerable<Plane> planes = _planeRepo.List(queryOptions);
+
+            if (!String.IsNullOrEmpty(model) && !String.IsNullOrEmpty(cityFrom) && !String.IsNullOrEmpty(cityTo))
+            {
+                planes = planes.Where(p => p.Model == model && p.CityFrom == cityFrom || p.CityTo == cityTo);
+            }
+            else if (!String.IsNullOrEmpty(model) && String.IsNullOrEmpty(cityFrom) && String.IsNullOrEmpty(cityTo))
+            {
+                planes = planes.Where(p => p.Model == model);
+            }
+            else if (!String.IsNullOrEmpty(cityFrom) && String.IsNullOrEmpty(cityFrom) && String.IsNullOrEmpty(cityTo))
+            {
+                planes = planes.Where(p => p.CityFrom == cityFrom);
+            }
+            else if (!String.IsNullOrEmpty(cityTo) && String.IsNullOrEmpty(cityFrom) && String.IsNullOrEmpty(cityTo))
+            {
+                planes = planes.Where(p => p.CityTo == cityTo);
+            }
+
+
+            return View(planes);
+        }
+
 
 
         [HttpGet]
@@ -139,6 +169,21 @@ namespace WebFlightCompany.Areas.Admin.Controllers
             };
             return _planeRepo.Get(queryOptions) ?? new Plane();
         }
+
+        private void LoadSearchMembers()
+        {
+            LoadViewBag();
+            QueryOptions<Plane> queryOptions = new QueryOptions<Plane>();
+
+            IEnumerable<String> models = _planeRepo.List(queryOptions).Select(p => p.Model).Distinct();
+            IEnumerable<String?> cityFromList = _planeRepo.List(queryOptions).Select(p => p.CityFrom).Distinct();
+            IEnumerable<String?> cityToList = _planeRepo.List(queryOptions).Select(p => p.CityTo).Distinct();
+
+            ViewBag.Models = models;
+            ViewBag.CitiesFrom = cityFromList;
+            ViewBag.CitiesTo = cityToList;
+        }
+
 
         private void LoadViewBag()
         {

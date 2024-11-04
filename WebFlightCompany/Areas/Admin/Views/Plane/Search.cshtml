@@ -2,35 +2,49 @@
 @model IEnumerable<Models.Plane>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Search";
 }
 
-<h3>Passenger List</h3>
-<table class="table" >
+<div class="container-lg">
+    <table class="table">
+        <thead>
+        <thead>
+            <tr>
+                <th>Model</th>
+                <th>CityFrom</th>
+                <th>CityTo</th>
+            </tr>
+        </thead>
+        <tbody class="align-content-lg-around">
+            <tr>
+                <form asp-area="Admin" asp-controller="Plane" asp-action="Search" method="get">
+                <th>
+                    <select class="form-control" name="model" asp-items="ViewBag.Models">
+                        <option value="">Select Model</option>
+                    </select>
+                </th>
+                <th>
+                    <select class="form-control" name="cityFrom" asp-items="ViewBag.CitiesFrom">
+                        <option value="">Select CityFrom</option>
+                    </select>
+                </th>
+                <th>
+                    <select class="form-control" name="cityFrom" asp-items="ViewBag.CitiesTo">
+                        <option value="">Select CityTo</option>
+                    </select>
+                </th>
+                <th>
+                    <button type="submit" class="btn align-content-md-end btn-primary">Search</button>
+                </th>
+                </form>
+            </tr>
+        </tbody>
 
-    <tr>
-        <th>
-            <a asp-action="Create">Create New</a>
-        </th>
 
-        @foreach (Passenger item in ViewBag.Passengers)
-        {
-            <th>
-                <a asp-action="Index" asp-route-id="@item.Id">@item.Name</a>
-            </th>
-        }
-    </tr>
-    <h3>Employee List</h3>
-    <tr>
+    </table>
+</div>
 
-        @foreach (Employee item in ViewBag.Employees)
-        {
-            <th>
-                <a asp-action="Index" asp-route-id="@item.Id">@item.Name</a>
-            </th>
-        }
-    </tr>
-</table>
+
 
 <h1>Index</h1>
 <table class="table-responsive-lg">

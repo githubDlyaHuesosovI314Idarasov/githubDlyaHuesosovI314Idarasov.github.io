@@ -66,6 +66,8 @@ namespace  WebFlightCompany.Areas.Identity.Pages.Account.Manage
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
         public static string YourTickets => "YourTickets";
+        public static string ExpiredTickets => "ExpiredTickets";
+
         public static string IndexNavClass(ViewContext viewContext) => PageNavClass(viewContext, Index);
 
         /// <summary>
@@ -116,6 +118,8 @@ namespace  WebFlightCompany.Areas.Identity.Pages.Account.Manage
         /// </summary>
         /// 
         public static string YourTicketsNavClass(ViewContext viewContext) => PageNavClass(viewContext, YourTickets);
+        public static string ExpiredTicketsNavClass(ViewContext viewContext) => PageNavClass(viewContext, ExpiredTickets);
+
         public static string PageNavClass(ViewContext viewContext, string page)
         {
             var activePage = viewContext.ViewData["ActivePage"] as string

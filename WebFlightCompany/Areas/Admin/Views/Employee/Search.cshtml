@@ -2,30 +2,52 @@
 @model IEnumerable<Models.Employee>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Search";
 }
 
 
-<h3>Plane List</h3>
-<table class="table">
-    
-    <th>
-        <a asp-action="Create">Create New</a>
-    </th>
-    @foreach (Plane item in ViewBag.Planes)
-    {
-        <th>
-            <a asp-action="Index" asp-route-id="@item.Id">
-                <tr>>Id: @item.Id </tr> 
-                <tr>Model: @item.Model</tr>
-            </a>
-        </th>
-    }
-    </thead>
-</table>
+
+<div class="container-lg">
+    <table class="table">
+        <thead>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Second Name</th>
+                <th>Position</th>
+            </tr>
+        </thead>
+        <tbody class="align-content-lg-around">
+            <tr>
+                <form asp-area="Admin" asp-controller="Employee" asp-action="Search" method="get">
+                <th>
+                    <select class="form-control" name="name" asp-items="ViewBag.Names">
+                        <option value="">Select Name</option>
+                    </select>
+                </th>
+                <th>
+                    <select class="form-control" name="secondName" asp-items="ViewBag.SecondNames">
+                        <option value="">Select Second Name</option>
+                    </select>
+                </th>
+                <th>
+                    <select class="form-control" name="position" asp-items="ViewBag.Positions">
+                        <option value="">Select Position</option>
+                    </select>
+                </th>
+                <th>
+                    <button type="submit" class="btn align-content-md-end btn-primary">Search</button>
+                </th>
+                </form>
+            </tr>
+        </tbody>
 
 
-<h1>Index</h1>
+    </table>
+</div>
+
+
+<h1>Index </h1>
 <table class="table">
     <thead>
         <tr>
@@ -47,12 +69,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.Sex)
             </th>
-            @{/*
-            <th>
-                @Html.DisplayNameFor(model => model.Time)
-            </th>
-            */
-            }
         </tr>
     </thead>
     <tbody>
@@ -76,13 +92,6 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Sex)
             </td>
-            @{
-            /*
-            <td>
-                @Html.DisplayFor(modelItem => item.Time)
-            </td>
-            */
-            }
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>

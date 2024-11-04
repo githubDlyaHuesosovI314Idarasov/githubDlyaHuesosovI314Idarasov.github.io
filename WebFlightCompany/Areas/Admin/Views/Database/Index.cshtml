@@ -12,18 +12,20 @@
         <tr>
 
             <td>
-                <a asp-area="Admin" asp-controller="Employee" asp-action="Index" title="Employee">Employee</a>
+                <a asp-area="Admin" asp-controller="Employee" asp-action="Search" title="Employee">Employee</a>
             </td>
             <td>
-                <a asp-area="Admin" asp-controller="Passenger" asp-action="Index" title="Passenger">Passenger</a>
+                <form asp-area="Admin" asp-controller="Passenger" asp-action="Search" method="post">
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="btn btn-link" style="padding:0;">Passenger</button>
+                </form>
+            </td>
+            <td>
+                <a asp-area="Admin" asp-controller="Plane" asp-action="Search" title="Plane">Plane</a>
 
             </td>
             <td>
-                <a asp-area="Admin" asp-controller="Plane" asp-action="Index" title="Plane">Plane</a>
-
-            </td>
-            <td>
-                <a asp-area="Admin" asp-controller="Ticket" asp-action="Index" title="Ticket">Ticket</a>
+                <a asp-area="Admin" asp-controller="Ticket" asp-action="Search" title="Ticket">Ticket</a>
 
             </td>
         </tr>
