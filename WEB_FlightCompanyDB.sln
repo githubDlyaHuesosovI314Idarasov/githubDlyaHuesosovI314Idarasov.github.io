@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "Models\Models.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebFlightCompany", "WebFlightCompany\WebFlightCompany.csproj", "{ABE9845E-21B9-488A-8503-87EF6CC2BB20}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmailCheckAPI", "EmailCheckAPI\EmailCheckAPI.csproj", "{279F7ED0-7D44-4187-819D-CD86D424AC86}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,14 @@ Global
 		{ABE9845E-21B9-488A-8503-87EF6CC2BB20}.Release|Any CPU.Build.0 = Release|Any CPU
 		{ABE9845E-21B9-488A-8503-87EF6CC2BB20}.Release|x86.ActiveCfg = Release|x86
 		{ABE9845E-21B9-488A-8503-87EF6CC2BB20}.Release|x86.Build.0 = Release|x86
+		{279F7ED0-7D44-4187-819D-CD86D424AC86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{279F7ED0-7D44-4187-819D-CD86D424AC86}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{279F7ED0-7D44-4187-819D-CD86D424AC86}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{279F7ED0-7D44-4187-819D-CD86D424AC86}.Debug|x86.Build.0 = Debug|Any CPU
+		{279F7ED0-7D44-4187-819D-CD86D424AC86}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{279F7ED0-7D44-4187-819D-CD86D424AC86}.Release|Any CPU.Build.0 = Release|Any CPU
+		{279F7ED0-7D44-4187-819D-CD86D424AC86}.Release|x86.ActiveCfg = Release|Any CPU
+		{279F7ED0-7D44-4187-819D-CD86D424AC86}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

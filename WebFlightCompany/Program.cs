@@ -2,12 +2,11 @@ using Areas.AspNet.Identity.Data;
 using CompanyDAL.EF;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.FileSystemGlobbing.Internal.Patterns;
-using WebFlightCompany.Areas.Identity.Pages.Account.Manage;
 using WebFlightCompany.Infrastracture.HostedServices;
+using WebFlightCompany.Infrastracture.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +18,7 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.R
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<FlightCompanyDbContext>();
 
+builder.Services.AddSingleton<IEmailSender, EmailSender>();
 builder.Services.AddHostedService<TicketExpirationHostedService>();
 
 builder.Services.AddControllersWithViews();
