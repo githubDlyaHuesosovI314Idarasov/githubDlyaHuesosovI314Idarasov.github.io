@@ -1,6 +1,7 @@
 ﻿using EmailCheckAPI.Models;
 using System.Net.Mail;
 using System.Net;
+using Microsoft.Extensions.Options;
 
 namespace EmailCheckAPI.Services
 {
@@ -8,31 +9,29 @@ namespace EmailCheckAPI.Services
     {
         private readonly SMTPSettings _smtpSettings;
 
-        public EmailService(SMTPSettings smtpSettings)
+        public EmailService(IOptions<SMTPSettings> smtpSettings)
         {
-            _smtpSettings = smtpSettings;
+            _smtpSettings = smtpSettings.Value;
         }
 
         public async Task SendEmailAsync(EmailRequest request)
         {
-            using var client = new SmtpClient(_smtpSettings.Host, Int32.Parse(_smtpSettings.Port))
+            using (var client = new SmtpClient(_smtpSettings.Host, _smtpSettings.Port))
             {
-                Credentials = new NetworkCredential(_smtpSettings.Username, _smtpSettings.Password),
-                EnableSsl = true
-            };
+                client.EnableSsl = _smtpSettings.EnableSSL;
+                client.Credentials = new NetworkCredential(_smtpSettings.Username, _smtpSettings.Password);
 
-            var mailMessage = new MailMessage
-            {
-                From = new MailAddress(_smtpSettings.From, _smtpSettings.Username),
-                Subject = request.Subject,
-                Body = request.Body,
-                IsBodyHtml = true
-            };
-            mailMessage.To.Add(request.ToEmail);
+                var mailMessage = new MailMessage
+                {
+                    From = new MailAddress(_smtpSettings.From),
+                    Subject = request.Subject,
+                    Body = request.Body,
+                    IsBodyHtml = true,
+                };
+                mailMessage.To.Add(request.ToEmail);
 
-            await client.SendMailAsync(mailMessage);
-
-
+                await client.SendMailAsync(mailMessage);
+            }
         }
 
 
