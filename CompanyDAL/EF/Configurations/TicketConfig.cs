@@ -20,7 +20,7 @@ namespace CompanyDAL.EF.Configurations
             DateTime dateTimeTo = new DateTime(2001, 9, 11, 23, 59, 59);
 
             builder.HasData(
-                new Ticket { Id = 1, CountryFrom = "Ukraine", CountryTo = "Poland", CityFrom = "DonbASS", CityTo = "Warsaw", PassengerId = 1, UserId = "", DateTimeFrom = dateTimeFrom, DateTimeTo = dateTimeTo }
+                new Ticket { Id = 1, CountryFrom = "Ukraine", CountryTo = "Poland", CityFrom = "DonbASS", CityTo = "Warsaw", PassengerId = 1, UserId = "", DateTimeFrom = dateTimeFrom, DateTimeTo = dateTimeTo  }
                 );
 
         }

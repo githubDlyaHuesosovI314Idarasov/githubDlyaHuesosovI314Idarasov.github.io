@@ -3,8 +3,8 @@
 @{
 }
 
-<table class="table">
-    <thead>
+<table class="table table-striped">
+    <thead class="text-center bg-light">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Ticket[0].Passenger)
@@ -27,10 +27,10 @@
             <th>
                 @Html.DisplayNameFor(model => model.Ticket[0].DateTimeTo)
             </th>
-            <th></th>
+
         </tr>
     </thead>
-    <tbody>
+    <tbody class="text-center">
         @foreach (var item in Model.Ticket)
         {
             <tr>

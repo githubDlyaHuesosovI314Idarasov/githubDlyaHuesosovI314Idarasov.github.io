@@ -12,15 +12,15 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CompanyDAL.Migrations
 {
     [DbContext(typeof(FlightCompanyDbContext))]
-    [Migration("20240911154456_ChangesThree")]
-    partial class ChangesThree
+    [Migration("20250205170830_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.8")
+                .HasAnnotation("ProductVersion", "8.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -261,6 +261,10 @@ namespace CompanyDAL.Migrations
                     b.Property<int>("PlaneId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Position")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("SecondName")
                         .IsRequired()
                         .HasMaxLength(35)
@@ -269,12 +273,6 @@ namespace CompanyDAL.Migrations
                     b.Property<string>("Sex")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<byte[]>("Time")
-                        .IsConcurrencyToken()
-                        .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
 
                     b.HasKey("Id");
 
@@ -289,9 +287,9 @@ namespace CompanyDAL.Migrations
                             Age = 20,
                             Name = "BaseEmployee",
                             PlaneId = 1,
+                            Position = "No Position",
                             SecondName = "Second Name here",
-                            Sex = "Male",
-                            Time = new byte[] { 0, 0, 0, 0, 0, 0, 0, 0 }
+                            Sex = "Male"
                         });
                 });
 
@@ -323,15 +321,6 @@ namespace CompanyDAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("TicketId")
-                        .HasColumnType("int");
-
-                    b.Property<byte[]>("Time")
-                        .IsConcurrencyToken()
-                        .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
                     b.HasKey("Id");
 
                     b.HasIndex("PlaneId");
@@ -346,9 +335,7 @@ namespace CompanyDAL.Migrations
                             Name = "BasePassenger",
                             PlaneId = 1,
                             SecondName = "No",
-                            Sex = "Male",
-                            TicketId = 1,
-                            Time = new byte[] { 0, 0, 0, 0, 0, 0, 0, 0 }
+                            Sex = "Male"
                         });
                 });
 
@@ -360,8 +347,23 @@ namespace CompanyDAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("From")
+                    b.Property<string>("CityFrom")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CityTo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CountryFrom")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CountryTo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateTimeFrom")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateTimeTo")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("MaxPassengerCount")
                         .HasColumnType("int");
@@ -370,36 +372,22 @@ namespace CompanyDAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte[]>("Time")
-                        .IsConcurrencyToken()
-                        .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.Property<TimeOnly>("TimeFrom")
-                        .HasColumnType("time");
-
-                    b.Property<TimeOnly>("TimeTo")
-                        .HasColumnType("time");
-
-                    b.Property<string>("To")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
-                    b.ToTable("Planes");
+                    b.ToTable("Planes", (string)null);
 
                     b.HasData(
                         new
                         {
                             Id = 1,
-                            From = "DonbASS",
+                            CityFrom = "DonbASS",
+                            CityTo = "Warsaw",
+                            CountryFrom = "Ukraine",
+                            CountryTo = "Warsaw",
+                            DateTimeFrom = new DateTime(420, 4, 20, 13, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateTimeTo = new DateTime(2001, 9, 11, 23, 59, 59, 0, DateTimeKind.Unspecified),
                             MaxPassengerCount = 911,
-                            Model = "Boeing 767",
-                            Time = new byte[] { 0, 0, 0, 0, 0, 0, 0, 0 },
-                            TimeFrom = new TimeOnly(20, 30, 0),
-                            TimeTo = new TimeOnly(8, 30, 0),
-                            To = "Warsaw"
+                            Model = "Boeing 767"
                         });
                 });
 
@@ -411,44 +399,52 @@ namespace CompanyDAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("From")
+                    b.Property<string>("CityFrom")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CityTo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CountryFrom")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CountryTo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateTimeFrom")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateTimeTo")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsExpired")
+                        .HasColumnType("bit");
 
                     b.Property<int>("PassengerId")
                         .HasColumnType("int");
 
-                    b.Property<byte[]>("Time")
-                        .IsConcurrencyToken()
-                        .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.Property<TimeOnly>("TimeFrom")
-                        .HasColumnType("time");
-
-                    b.Property<TimeOnly>("TimeTo")
-                        .HasColumnType("time");
-
-                    b.Property<string>("To")
+                    b.Property<string>("UserId")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PassengerId")
-                        .IsUnique();
+                    b.HasIndex("PassengerId");
 
-                    b.ToTable("Tickets");
+                    b.ToTable("Tickets", (string)null);
 
                     b.HasData(
                         new
                         {
                             Id = 1,
-                            From = "DonbASS",
+                            CityFrom = "DonbASS",
+                            CityTo = "Warsaw",
+                            CountryFrom = "Ukraine",
+                            CountryTo = "Poland",
+                            DateTimeFrom = new DateTime(420, 4, 20, 13, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateTimeTo = new DateTime(2001, 9, 11, 23, 59, 59, 0, DateTimeKind.Unspecified),
+                            IsExpired = false,
                             PassengerId = 1,
-                            Time = new byte[] { 0, 0, 0, 0, 0, 0, 0, 0 },
-                            TimeFrom = new TimeOnly(20, 30, 0),
-                            TimeTo = new TimeOnly(8, 30, 0),
-                            To = "Warsaw"
+                            UserId = ""
                         });
                 });
 
@@ -528,8 +524,8 @@ namespace CompanyDAL.Migrations
             modelBuilder.Entity("Models.Ticket", b =>
                 {
                     b.HasOne("Models.Passenger", "Passenger")
-                        .WithOne("Ticket")
-                        .HasForeignKey("Models.Ticket", "PassengerId")
+                        .WithMany("Tickets")
+                        .HasForeignKey("PassengerId")
                         .IsRequired();
 
                     b.Navigation("Passenger");
@@ -537,7 +533,7 @@ namespace CompanyDAL.Migrations
 
             modelBuilder.Entity("Models.Passenger", b =>
                 {
-                    b.Navigation("Ticket");
+                    b.Navigation("Tickets");
                 });
 
             modelBuilder.Entity("Models.Plane", b =>

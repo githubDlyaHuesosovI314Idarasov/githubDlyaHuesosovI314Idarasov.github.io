@@ -4,16 +4,17 @@
 @{
     ViewData["Title"] = "Search";
 }
-
+<h1>Select Passengers by Name or/and SecondName</h1>
 <div class="container-lg">
     <table class="table">
-        <thead>
-        <thead>
-            <tr>
+
+        <thead class="bg-light">
+            <tr class="text-center">
                 <th>Name</th>
-                <th>Second Name</th>
+                <th>SecondName</th>
             </tr>
         </thead>
+
         <tbody class="align-content-lg-around">
             <tr>
                 <form asp-area="Admin" asp-controller="Passenger" asp-action="Search" method="get">
@@ -39,12 +40,12 @@
     </table>
 </div>
 
-<h1>Index</h1>
-<table class="table">
-    <thead>
-        <tr>
+<h1>Passenger List</h1>
+<table class="table table-striped">
+    <thead class="bg-light">
+        <tr class="text-center">
             <th>
-                @Html.DisplayNameFor(model => model.Plane).FirstOrDefault();
+                @Html.DisplayNameFor(model => model.Plane);
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Name)
@@ -63,7 +64,7 @@
     </thead>
     <tbody>
 @foreach (var item in Model) {
-        <tr>
+        <tr class="text-center">
             <td>
                 @if (item.Plane != null)
                 {

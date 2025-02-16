@@ -4,11 +4,17 @@
     ViewData["Title"] = "Search";
 }
 
+<h1 class="text-start">Search Tickets by CityFrom and CityTo</h1>
 <div class="container-lg">
     <table class="table">
-        <thead>
-            <tr>
-                <h1 class="align-content-lg-start">Search Tickets by CityFrom and CityTo</h1>
+        <thead class="bg-light">
+            <tr class="text-center">
+                <th>
+                    CityFrom
+                </th>
+                <th>
+                    CityTo
+                </th>
             </tr>
         </thead>
         <tbody class="align-content-lg-around">
@@ -34,9 +40,11 @@
 
     </table>
 </div>
-<table class="table lg">
-    <thead>
-        <tr>
+
+<h1>Ticket List</h1>
+<table class="table table-striped">
+    <thead class="bg-light">
+        <tr class="text-center">
             <th>
                 @Html.DisplayNameFor(model => model.Passenger)
             </th>
@@ -62,7 +70,7 @@
     </thead>
     <tbody>
 @foreach (var item in Model) {
-        <tr>
+        <tr class="text-center">
             <td>
                 @Html.DisplayFor(modelItem => item.Passenger.Name)
             </td>

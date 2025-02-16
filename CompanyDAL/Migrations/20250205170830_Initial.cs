@@ -12,26 +12,6 @@ namespace CompanyDAL.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Accounts",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PassengerId = table.Column<int>(type: "int", nullable: false),
-                    Time = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(35)", maxLength: 35, nullable: false),
-                    SecondName = table.Column<string>(type: "nvarchar(35)", maxLength: 35, nullable: false),
-                    Age = table.Column<int>(type: "int", nullable: false),
-                    Sex = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Accounts", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
                 {
@@ -52,7 +32,7 @@ namespace CompanyDAL.Migrations
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(100)", nullable: false),
                     SecondName = table.Column<string>(type: "nvarchar(100)", nullable: false),
-                    Age = table.Column<string>(type: "nvarchar(10)", nullable: false),
+                    Age = table.Column<int>(type: "int", nullable: false),
                     Sex = table.Column<string>(type: "nvarchar(30)", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -72,6 +52,26 @@ namespace CompanyDAL.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Planes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Model = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    MaxPassengerCount = table.Column<int>(type: "int", nullable: false),
+                    CountryFrom = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CountryTo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CityFrom = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CityTo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DateTimeFrom = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateTimeTo = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Planes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -181,53 +181,13 @@ namespace CompanyDAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Destination",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    TicketId = table.Column<int>(type: "int", nullable: false),
-                    PlaneId = table.Column<int>(type: "int", nullable: false),
-                    From = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    To = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    TimeFrom = table.Column<TimeOnly>(type: "time", nullable: false),
-                    TimeTo = table.Column<TimeOnly>(type: "time", nullable: false),
-                    Time = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Destination", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Planes",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Model = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    MaxPassengerCount = table.Column<int>(type: "int", nullable: false),
-                    DestinationId = table.Column<int>(type: "int", nullable: false),
-                    Time = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Planes", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Planes_Destination_DestinationId",
-                        column: x => x.DestinationId,
-                        principalTable: "Destination",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Employees",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PlaneId = table.Column<int>(type: "int", nullable: false),
-                    Time = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
+                    Position = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(35)", maxLength: 35, nullable: false),
                     SecondName = table.Column<string>(type: "nvarchar(35)", maxLength: 35, nullable: false),
                     Age = table.Column<int>(type: "int", nullable: false),
@@ -240,19 +200,17 @@ namespace CompanyDAL.Migrations
                         name: "FK_Employees_Planes_PlaneId",
                         column: x => x.PlaneId,
                         principalTable: "Planes",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Persons",
+                name: "Passengers",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PlaneId = table.Column<int>(type: "int", nullable: false),
-                    TicketId = table.Column<int>(type: "int", nullable: false),
-                    AccountId = table.Column<int>(type: "int", nullable: false),
-                    Time = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
                     Name = table.Column<string>(type: "nvarchar(35)", maxLength: 35, nullable: false),
                     SecondName = table.Column<string>(type: "nvarchar(35)", maxLength: 35, nullable: false),
                     Age = table.Column<int>(type: "int", nullable: false),
@@ -260,14 +218,9 @@ namespace CompanyDAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Persons", x => x.Id);
+                    table.PrimaryKey("PK_Passengers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Persons_Accounts_AccountId",
-                        column: x => x.AccountId,
-                        principalTable: "Accounts",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Persons_Planes_PlaneId",
+                        name: "FK_Passengers_Planes_PlaneId",
                         column: x => x.PlaneId,
                         principalTable: "Planes",
                         principalColumn: "Id",
@@ -281,17 +234,44 @@ namespace CompanyDAL.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PassengerId = table.Column<int>(type: "int", nullable: false),
-                    Time = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false)
+                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsExpired = table.Column<bool>(type: "bit", nullable: false),
+                    CountryFrom = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CountryTo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CityFrom = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CityTo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DateTimeFrom = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateTimeTo = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Tickets", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Tickets_Persons_PassengerId",
+                        name: "FK_Tickets_Passengers_PassengerId",
                         column: x => x.PassengerId,
-                        principalTable: "Persons",
+                        principalTable: "Passengers",
                         principalColumn: "Id");
                 });
+
+            migrationBuilder.InsertData(
+                table: "Planes",
+                columns: new[] { "Id", "CityFrom", "CityTo", "CountryFrom", "CountryTo", "DateTimeFrom", "DateTimeTo", "MaxPassengerCount", "Model" },
+                values: new object[] { 1, "DonbASS", "Warsaw", "Ukraine", "Warsaw", new DateTime(420, 4, 20, 13, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2001, 9, 11, 23, 59, 59, 0, DateTimeKind.Unspecified), 911, "Boeing 767" });
+
+            migrationBuilder.InsertData(
+                table: "Employees",
+                columns: new[] { "Id", "Age", "Name", "PlaneId", "Position", "SecondName", "Sex" },
+                values: new object[] { 1, 20, "BaseEmployee", 1, "No Position", "Second Name here", "Male" });
+
+            migrationBuilder.InsertData(
+                table: "Passengers",
+                columns: new[] { "Id", "Age", "Name", "PlaneId", "SecondName", "Sex" },
+                values: new object[] { 1, 99, "BasePassenger", 1, "No", "Male" });
+
+            migrationBuilder.InsertData(
+                table: "Tickets",
+                columns: new[] { "Id", "CityFrom", "CityTo", "CountryFrom", "CountryTo", "DateTimeFrom", "DateTimeTo", "IsExpired", "PassengerId", "UserId" },
+                values: new object[] { 1, "DonbASS", "Warsaw", "Ukraine", "Poland", new DateTime(420, 4, 20, 13, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2001, 9, 11, 23, 59, 59, 0, DateTimeKind.Unspecified), false, 1, "" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -333,54 +313,24 @@ namespace CompanyDAL.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Destination_TicketId",
-                table: "Destination",
-                column: "TicketId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Employees_PlaneId",
                 table: "Employees",
                 column: "PlaneId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Persons_AccountId",
-                table: "Persons",
-                column: "AccountId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Persons_PlaneId",
-                table: "Persons",
+                name: "IX_Passengers_PlaneId",
+                table: "Passengers",
                 column: "PlaneId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Planes_DestinationId",
-                table: "Planes",
-                column: "DestinationId",
-                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Tickets_PassengerId",
                 table: "Tickets",
-                column: "PassengerId",
-                unique: true);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Destination_Tickets_TicketId",
-                table: "Destination",
-                column: "TicketId",
-                principalTable: "Tickets",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                column: "PassengerId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Destination_Tickets_TicketId",
-                table: "Destination");
-
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -400,25 +350,19 @@ namespace CompanyDAL.Migrations
                 name: "Employees");
 
             migrationBuilder.DropTable(
+                name: "Tickets");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Tickets");
-
-            migrationBuilder.DropTable(
-                name: "Persons");
-
-            migrationBuilder.DropTable(
-                name: "Accounts");
+                name: "Passengers");
 
             migrationBuilder.DropTable(
                 name: "Planes");
-
-            migrationBuilder.DropTable(
-                name: "Destination");
         }
     }
 }

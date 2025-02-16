@@ -28,7 +28,7 @@ namespace CompanyDAL.EF
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
-            optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=FlightCompanyDb;Trusted_Connection=True;MultipleActiveResultSets=True;");
+            optionsBuilder.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=FlightCompanyDb;Trusted_Connection=True;TrustServerCertificate=True;MultipleActiveResultSets=True;");
         }
 
         public virtual DbSet<Employee> Employees { get; set; } = null!;
@@ -40,6 +40,8 @@ namespace CompanyDAL.EF
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<Plane>().ToTable("Planes");
+            modelBuilder.Entity<Ticket>().ToTable("Tickets");
 
             modelBuilder.ApplyConfiguration(new EmployeeConfig());
             modelBuilder.ApplyConfiguration(new PlaneConfig());

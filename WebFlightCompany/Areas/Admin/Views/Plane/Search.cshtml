@@ -1,15 +1,14 @@
 ﻿@using Models;
-@model IEnumerable<Models.Plane>
+@model IEnumerable<Plane>
 
 @{
     ViewData["Title"] = "Search";
 }
-
+<h1>Select Plane by Model or/and CityFrom, CityTo</h1>
 <div class="container-lg">
     <table class="table">
-        <thead>
-        <thead>
-            <tr>
+        <thead class="bg-light">
+            <tr class="text-center">
                 <th>Model</th>
                 <th>CityFrom</th>
                 <th>CityTo</th>
@@ -46,10 +45,10 @@
 
 
 
-<h1>Index</h1>
-<table class="table-responsive-lg">
-    <thead>
-        <tr>
+<h1>Plane List</h1>
+<table class="table table-striped">
+    <thead class="bg-light">
+        <tr class="text-center">
             <th>
                 @Html.DisplayNameFor(model => model.Model)
             </th>
@@ -80,7 +79,7 @@
     </thead>
     <tbody>
 @foreach (var item in Model) {
-        <tr>
+        <tr class="text-center">
             <td>
                 @Html.DisplayFor(modelItem => item.Model)
             </td>
@@ -105,13 +104,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.DateTimeTo)
             </td>
-            @{
-            /*
-            <td>
-                @Html.DisplayFor(modelItem => item.Time)
-            </td>
-            */
-            }
+
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>

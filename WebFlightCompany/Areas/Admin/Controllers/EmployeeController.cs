@@ -53,8 +53,7 @@ namespace WebFlightCompany.Areas.Admin.Controllers
             return View(employeeList);
         }
 
-        [HttpGet]
-        public ActionResult Search(String name, String secondName, String position)
+        public ActionResult Search(String? name, String? secondName, String? position)
         {
             LoadSearchMembers();
 
@@ -83,7 +82,7 @@ namespace WebFlightCompany.Areas.Admin.Controllers
                 employees = employees.Where(p => p.Position == position);
             }
 
-            return View("Index", employees);  
+            return View(employees);  
         }
 
 

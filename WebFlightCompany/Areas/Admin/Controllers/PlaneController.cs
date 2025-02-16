@@ -2,6 +2,7 @@
 using CompanyDAL.Repos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Models;
 using NuGet.Protocol;
@@ -67,8 +68,8 @@ namespace WebFlightCompany.Areas.Admin.Controllers
             return View(planetList);
         }
 
-        [HttpGet]
-        public ActionResult Search(String model, String? cityFrom, String? cityTo)
+
+        public ActionResult Search(String? model, String? cityFrom, String? cityTo)
         {
             LoadSearchMembers();
 
@@ -175,13 +176,13 @@ namespace WebFlightCompany.Areas.Admin.Controllers
             LoadViewBag();
             QueryOptions<Plane> queryOptions = new QueryOptions<Plane>();
 
-            IEnumerable<String> models = _planeRepo.List(queryOptions).Select(p => p.Model).Distinct();
+            IEnumerable<String?> models = _planeRepo.List(queryOptions).Select(p => p.Model).Distinct();
             IEnumerable<String?> cityFromList = _planeRepo.List(queryOptions).Select(p => p.CityFrom).Distinct();
             IEnumerable<String?> cityToList = _planeRepo.List(queryOptions).Select(p => p.CityTo).Distinct();
 
-            ViewBag.Models = models;
-            ViewBag.CitiesFrom = cityFromList;
-            ViewBag.CitiesTo = cityToList;
+            ViewBag.Models = new SelectList(models);
+            ViewBag.CitiesFrom = new SelectList(cityFromList);
+            ViewBag.CitiesTo = new SelectList(cityToList);
         }
 
 
